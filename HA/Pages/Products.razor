@@ -1,0 +1,71 @@
+@page "/products"
+
+@using HA.Models
+@using HA.Services
+@inject IProductService productService
+
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from a service.</p>
+
+
+<div>
+    <EditForm Model="@product" OnSubmit="@AddProduct">
+        <input @bind="product.Name" />
+        <input @bind="product.Price" />
+        <input type="submit" value="Submit" class="btn btn-primary" />
+    </EditForm> 
+</div>
+
+
+@if (products == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name.</th>
+                <th>Price. ($)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in products)
+            {
+                <tr>
+                    <td>@product.Id</td>
+                    <td>@product.Name</td>
+                    <td>@product.Price</td>
+                    <td><button @onclick="(() => DeleteProduct(product))">Delete</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Product> products;
+    private Product product = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await productService.GetSomeData();
+        //product = new Product { Id = Guid.NewGuid(), Name = "test", Price = 1 };
+    }
+
+    public async Task AddProduct()
+    {
+        product = await productService.AddProduct(product);
+        product = new();
+        products = await productService.GetSomeData();
+    }
+
+    public async Task DeleteProduct(Product product)
+    {
+        await productService.DeleteProduct(product);
+        products = await productService.GetSomeData();
+    }
+}
