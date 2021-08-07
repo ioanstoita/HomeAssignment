@@ -9,5 +9,6 @@ namespace HA.Repository.Repositories
 {
     public interface IProductsRepository : IRepository<Product>
     {
+        List<Product> GetAllProducts(string RetailerName);
     }
 }

@@ -16,5 +16,11 @@ namespace HA.Repository.Repositories
         {
             _context = context;
         }
+
+        public List<Product> GetAllProducts(string RetailerName)
+        {
+            List<Product> products = _context.Set<Product>().Where(x => x.RetailerName == RetailerName).ToList<Product>();
+            return products;
+        }
     }
 }

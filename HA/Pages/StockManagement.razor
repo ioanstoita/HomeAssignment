@@ -1,0 +1,93 @@
+@page "/stock"
+
+@attribute [Authorize(Roles = "admin, retailer")]
+
+@using HA.Models
+@using HA.Services
+@inject IProductService productService
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider authenticationStateProvider
+
+<h1>Stock Management</h1>
+
+<p>Here you can manage your products. </p>
+
+
+<div>
+    <EditForm Model="@product" OnSubmit="@AddProduct">
+        <label>Product Name</label>
+        <input @bind="product.Name" placeholder="e.g., Chair" />
+        <label>Product Price</label>
+        <input @bind="product.Price" placeholder="0" />
+        <label>Standard Price</label>
+        <input type="checkbox" @bind="product.StandardPrice" />
+        <input type="submit" value="Add product" class="btn btn-primary" />
+    </EditForm>
+</div>
+
+
+@if (products == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <!--<th>Id</th>-->
+                <th>Name.</th>
+                <th>Price. ($)</th>
+                <th>Standard Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in products)
+            {
+            <tr>
+                <!--<td>@product.Id</td>-->
+                <td>@product.Name</td>
+                <td>@product.Price</td>
+                <td>@product.StandardPrice</td>
+                <td><button @onclick="(() => DeleteProduct(product))">Delete</button></td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Product> products;
+    private Product product = new();
+
+    private string username = default!;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        // get retailer's username
+        var authstate = await authenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authstate.User;
+        username = user.Identity.Name;
+
+        products = productService.GetAllProducts(username);
+    }
+
+    public async Task AddProduct()
+    {
+        if(!string.IsNullOrEmpty(product.Name))
+        {
+            product.RetailerName = username;
+            product = await productService.AddProduct(product);
+            product = new();
+            products = productService.GetAllProducts(username);
+        }
+    }
+
+    public async Task DeleteProduct(Product product)
+    {
+        await productService.DeleteProduct(product);
+        products = productService.GetAllProducts(username);
+    }
+}

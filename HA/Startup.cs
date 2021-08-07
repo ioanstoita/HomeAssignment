@@ -38,15 +38,17 @@ namespace HA
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();           
+            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.AddScoped<IWeatherForecastService, WeatherForecastService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IRebateService, RebateService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

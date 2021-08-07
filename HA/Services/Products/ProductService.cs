@@ -18,7 +18,7 @@ namespace HA.Services
             _repository = repository;
         }
 
-        public async Task<List<Product>> GetSomeData()
+        public async Task<List<Product>> GetAllProductsAsync()
         {
             /*var products = await _context.Products.Where(x => x.Name.ToLower().Contains("birou")).Select(x => new Product
             {
@@ -28,6 +28,11 @@ namespace HA.Services
             var products = await _repository.Products.GetAllAsync();
 
             return products;
+        }
+
+        public List<Product> GetAllProducts(string RetailerName)
+        {
+            return _repository.Products.GetAllProducts(RetailerName);
         }
 
         public async Task<Product> AddProduct(Product product)

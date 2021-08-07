@@ -27,13 +27,6 @@ using Microsoft.AspNetCore.Authorization;
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "D:\0_Projects\HA\HA\_Imports.razor"
-using Microsoft.AspNetCore.Components.Authorization;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
 #line 4 "D:\0_Projects\HA\HA\_Imports.razor"
 using Microsoft.AspNetCore.Components.Forms;
 
@@ -76,21 +69,42 @@ using HA.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "D:\0_Projects\HA\HA\Pages\Products.razor"
+#line 5 "D:\0_Projects\HA\HA\Pages\RebateManager.razor"
 using HA.Models;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 4 "D:\0_Projects\HA\HA\Pages\Products.razor"
+#line 6 "D:\0_Projects\HA\HA\Pages\RebateManager.razor"
 using HA.Services;
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/products")]
-    public partial class Products : Microsoft.AspNetCore.Components.ComponentBase
+#nullable restore
+#line 8 "D:\0_Projects\HA\HA\Pages\RebateManager.razor"
+using System.Security.Claims;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 9 "D:\0_Projects\HA\HA\Pages\RebateManager.razor"
+using Microsoft.AspNetCore.Components.Authorization;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 3 "D:\0_Projects\HA\HA\Pages\RebateManager.razor"
+           [Authorize(Roles = "admin, retailer")]
+
+#line default
+#line hidden
+#nullable disable
+    [Microsoft.AspNetCore.Components.RouteAttribute("/rebate")]
+    public partial class RebateManager : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -98,34 +112,46 @@ using HA.Services;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 49 "D:\0_Projects\HA\HA\Pages\Products.razor"
+#line 60 "D:\0_Projects\HA\HA\Pages\RebateManager.razor"
        
-    private List<Product> products;
-    private Product product = new();
+    private List<Rebate> rebates;
+    private Rebate rebate = new();
+
+    private string username = default!;
+
 
     protected override async Task OnInitializedAsync()
     {
-        products = await productService.GetSomeData();
-        //product = new Product { Id = Guid.NewGuid(), Name = "test", Price = 1 };
+        // get retailer's username
+        var authstate = await authenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authstate.User;
+        username = user.Identity.Name;
+
+        rebates = rebateService.GetAllRetailerRebates(username);
     }
 
-    public async Task AddProduct()
+    public async Task AddRebate()
     {
-        product = await productService.AddProduct(product);
-        product = new();
-        products = await productService.GetSomeData();
+        if (!string.IsNullOrEmpty(rebate.CustomerName) && (rebate.RebateValue > 0 || rebate.RebatePercent > 0))
+        {
+            rebate.RetailerName = username;
+            rebate = await rebateService.AddRebate(rebate);
+            rebate = new();
+            rebates = rebateService.GetAllRetailerRebates(username);
+        }
     }
 
-    public async Task DeleteProduct(Product product)
+    public async Task DeleteRebate(Rebate rebate)
     {
-        await productService.DeleteProduct(product);
-        products = await productService.GetSomeData();
+        await rebateService.DeleteRebate(rebate);
+        rebates = rebateService.GetAllRetailerRebates(username);
     }
 
 #line default
 #line hidden
 #nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IProductService productService { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private AuthenticationStateProvider authenticationStateProvider { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IRebateService rebateService { get; set; }
     }
 }
 #pragma warning restore 1591

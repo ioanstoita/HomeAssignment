@@ -76,14 +76,28 @@ using HA.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "D:\0_Projects\HA\HA\Pages\FetchData.razor"
-using HA.Data;
+#line 5 "D:\0_Projects\HA\HA\Pages\Stock - Copy.razor"
+using HA.Models;
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/fetchdata")]
-    public partial class FetchData : Microsoft.AspNetCore.Components.ComponentBase
+#nullable restore
+#line 6 "D:\0_Projects\HA\HA\Pages\Stock - Copy.razor"
+using HA.Services;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 3 "D:\0_Projects\HA\HA\Pages\Stock - Copy.razor"
+           [Authorize(Roles = "admin, retailer")]
+
+#line default
+#line hidden
+#nullable disable
+    [Microsoft.AspNetCore.Components.RouteAttribute("/stock")]
+    public partial class Stock___Copy : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -91,19 +105,34 @@ using HA.Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 39 "D:\0_Projects\HA\HA\Pages\FetchData.razor"
+#line 51 "D:\0_Projects\HA\HA\Pages\Stock - Copy.razor"
        
-    private WeatherForecast[] forecasts;
+    private List<Product> products;
+    private Product product = new();
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+        products = await productService.GetSomeData();
+        //product = new Product { Id = Guid.NewGuid(), Name = "test", Price = 1 };
+    }
+
+    public async Task AddProduct()
+    {
+        product = await productService.AddProduct(product);
+        product = new();
+        products = await productService.GetSomeData();
+    }
+
+    public async Task DeleteProduct(Product product)
+    {
+        await productService.DeleteProduct(product);
+        products = await productService.GetSomeData();
     }
 
 #line default
 #line hidden
 #nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private WeatherForecastService ForecastService { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IProductService productService { get; set; }
     }
 }
 #pragma warning restore 1591

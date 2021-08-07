@@ -12,5 +12,9 @@ namespace HA.Models
         public string Name { get; set; }
 
         public double Price { get; set; }
+
+        public string RetailerName { get; set; }
+
+        public bool StandardPrice { get; set; }
     }
 }

@@ -60,9 +60,7 @@ D:\0_Projects\HA\HA\obj\Debug\net5.0\HA.MvcApplicationPartsAssemblyInfo.cache
 D:\0_Projects\HA\HA\obj\Debug\net5.0\HA.RazorComponent.input.cache
 D:\0_Projects\HA\HA\obj\Debug\net5.0\RazorDeclaration\App.razor.g.cs
 D:\0_Projects\HA\HA\obj\Debug\net5.0\RazorDeclaration\Pages\Counter.razor.g.cs
-D:\0_Projects\HA\HA\obj\Debug\net5.0\RazorDeclaration\Pages\FetchData.razor.g.cs
 D:\0_Projects\HA\HA\obj\Debug\net5.0\RazorDeclaration\Pages\Index.razor.g.cs
-D:\0_Projects\HA\HA\obj\Debug\net5.0\RazorDeclaration\Pages\Products.razor.g.cs
 D:\0_Projects\HA\HA\obj\Debug\net5.0\RazorDeclaration\Shared\LoginDisplay.razor.g.cs
 D:\0_Projects\HA\HA\obj\Debug\net5.0\RazorDeclaration\Shared\MainLayout.razor.g.cs
 D:\0_Projects\HA\HA\obj\Debug\net5.0\RazorDeclaration\Shared\NavMenu.razor.g.cs
@@ -75,9 +73,7 @@ D:\0_Projects\HA\HA\obj\Debug\net5.0\HA.TagHelpers.output.cache
 D:\0_Projects\HA\HA\obj\Debug\net5.0\HA.RazorCoreGenerate.cache
 D:\0_Projects\HA\HA\obj\Debug\net5.0\Razor\App.razor.g.cs
 D:\0_Projects\HA\HA\obj\Debug\net5.0\Razor\Pages\Counter.razor.g.cs
-D:\0_Projects\HA\HA\obj\Debug\net5.0\Razor\Pages\FetchData.razor.g.cs
 D:\0_Projects\HA\HA\obj\Debug\net5.0\Razor\Pages\Index.razor.g.cs
-D:\0_Projects\HA\HA\obj\Debug\net5.0\Razor\Pages\Products.razor.g.cs
 D:\0_Projects\HA\HA\obj\Debug\net5.0\Razor\Shared\LoginDisplay.razor.g.cs
 D:\0_Projects\HA\HA\obj\Debug\net5.0\Razor\Shared\MainLayout.razor.g.cs
 D:\0_Projects\HA\HA\obj\Debug\net5.0\Razor\Shared\NavMenu.razor.g.cs
@@ -100,4 +96,10 @@ D:\0_Projects\HA\HA\obj\Debug\net5.0\HA.dll
 D:\0_Projects\HA\HA\obj\Debug\net5.0\ref\HA.dll
 D:\0_Projects\HA\HA\obj\Debug\net5.0\HA.pdb
 D:\0_Projects\HA\HA\obj\Debug\net5.0\HA.genruntimeconfig.cache
+D:\0_Projects\HA\HA\obj\Debug\net5.0\RazorDeclaration\Pages\Shop.razor.g.cs
+D:\0_Projects\HA\HA\obj\Debug\net5.0\Razor\Pages\Shop.razor.g.cs
 D:\0_Projects\HA\HA\obj\Debug\net5.0\HA.csproj.AssemblyReference.cache
+D:\0_Projects\HA\HA\obj\Debug\net5.0\RazorDeclaration\Pages\StockManagement.razor.g.cs
+D:\0_Projects\HA\HA\obj\Debug\net5.0\RazorDeclaration\Pages\RebateManager.razor.g.cs
+D:\0_Projects\HA\HA\obj\Debug\net5.0\Razor\Pages\RebateManager.razor.g.cs
+D:\0_Projects\HA\HA\obj\Debug\net5.0\Razor\Pages\StockManagement.razor.g.cs

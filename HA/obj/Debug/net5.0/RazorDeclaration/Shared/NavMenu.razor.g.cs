@@ -83,7 +83,7 @@ using HA.Shared;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 28 "D:\0_Projects\HA\HA\Shared\NavMenu.razor"
+#line 47 "D:\0_Projects\HA\HA\Shared\NavMenu.razor"
        
     private bool collapseNavMenu = true;
 

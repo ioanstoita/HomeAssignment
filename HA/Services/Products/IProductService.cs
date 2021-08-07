@@ -8,6 +8,7 @@ namespace HA.Services
     {
         Task<Product> AddProduct(Product product);
         Task DeleteProduct(Product product);
-        Task<List<Product>> GetSomeData();
+        Task<List<Product>> GetAllProductsAsync();
+        List<Product> GetAllProducts(string RetailerName);
     }
 }

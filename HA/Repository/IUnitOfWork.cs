@@ -8,5 +8,6 @@ namespace HA.Repositories
         Task SaveChangesAsync();
 
         IProductsRepository Products { get; set; }
+        IRebateRepository Rebates { get; set; }
     }
 }

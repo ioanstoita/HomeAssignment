@@ -1,0 +1,50 @@
+@page "/shop"
+
+@using HA.Models
+@using HA.Services
+@inject IProductService productService
+
+<h1>Shop</h1>
+
+<p>Here you can buy products from all retailers.</p>
+<p>PS: User cart not implemented...</p>
+
+
+@if (products == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <!--<th>Id</th>-->
+                <th>Name</th>
+                <th>Price ($)</th>
+                <th>Retailer</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in products)
+            {
+            <tr>
+                <!--<td>@product.Id</td>-->
+                <td>@product.Name</td>
+                <td>@product.Price</td>
+                <td>@product.RetailerName</td>
+                <td><button>Add to chart</button></td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Product> products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await productService.GetAllProductsAsync();
+    }
+}

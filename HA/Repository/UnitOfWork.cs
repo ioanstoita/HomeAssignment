@@ -15,9 +15,11 @@ namespace HA.Repositories
         {
             _context = context;
             Products = new ProductsRepository(context);
+            Rebates = new RebatesRepository(context);
         }
 
         public IProductsRepository Products { get; set; }
+        public IRebateRepository Rebates { get; set; }
 
         public async Task SaveChangesAsync()
         {
