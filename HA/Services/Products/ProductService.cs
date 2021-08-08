@@ -18,11 +18,6 @@ namespace HA.Services
             _repository = repository;
         }
 
-        /*public async Task<List<Product>> GetAllProductsAsync()
-        {
-            return await _repository.Products.GetAllAsync();
-        }*/
-
         public async Task<List<Product>> GetAllCustomerProductsAsync(string CustomerName)
         {
             List<Product> products = await _repository.Products.GetAllProductsWithRebatesAsync(CustomerName);
@@ -30,12 +25,9 @@ namespace HA.Services
 
             foreach(Product product in products)
             {
-                // calculate rebate only if applicable for that product
                 if(!product.StandardPrice)
                 {
-                    //rebates.Where(x => x.Retailer.UserName == product.Retailer.UserName).ToList();
-
-                    List<Rebate> matchRebates = product.Retailer.Rebates.ToList();
+                    List<Rebate> matchRebates = product.Retailer.Rebates.Where(x => x.Retailer.UserName != CustomerName).ToList();
                     if(matchRebates.Count > 0)
                     {
                         double maxRebate = matchRebates.Max(y => y.RebatePercent);
@@ -57,6 +49,7 @@ namespace HA.Services
         public async Task<Product> AddProduct(Product product)
         {
             if(product.Price > 0 && product.Retailer.UserName is not null)
+                //todo: check claims
             {
                 _repository.Products.Add(product);
                 await _repository.SaveChangesAsync();
@@ -65,6 +58,7 @@ namespace HA.Services
         }
 
         public async Task DeleteProduct(Product product)
+        //todo: check claims
         {
             _repository.Products.Remove(product);
             await _repository.SaveChangesAsync();

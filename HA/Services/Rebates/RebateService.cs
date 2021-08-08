@@ -26,6 +26,7 @@ namespace HA.Services
             if (rebate.RebatePercent > 0 && rebate.RebatePercent < 100
                 && rebate.Retailer is not null
                 && customer is not null)
+            //todo: check claims
             {
                 rebate.Customer = customer;
                 _repository.Rebates.Add(rebate);
@@ -37,6 +38,7 @@ namespace HA.Services
 
         public async Task DeleteRebate(Rebate rebate)
         {
+            //todo: check claims
             _repository.Rebates.Remove(rebate);
             await _repository.SaveChangesAsync();
         }
