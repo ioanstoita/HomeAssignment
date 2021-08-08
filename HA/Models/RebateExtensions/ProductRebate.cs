@@ -8,7 +8,7 @@ namespace HA.Models.RebateExtensions
     /// <summary>
     /// Rebate available for only one product
     /// </summary>
-    public class ProductRebate
+    public class ProductRebate : Rebate
     {
         public virtual Product Product { get; set; }
     }
