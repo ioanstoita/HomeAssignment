@@ -1,11 +1,15 @@
 @page "/shop"
 
+@attribute [Authorize()]
+
 @using HA.Models
 @using HA.Services
 @inject IProductService productService
 @using System.Security.Claims
 @using Microsoft.AspNetCore.Components.Authorization
 @inject AuthenticationStateProvider authenticationStateProvider
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> userManager
 
 <h1>Shop</h1>
 
@@ -36,7 +40,7 @@ else
                     <td>@product.Name</td>
                     <td>@(product.RebatePrice > 0 ? (product.RebatePrice + "$ from " + product.Price + "$") : (product.Price + "$"))</td>
                     <!--<td>@product.Price</td>-->
-                    <td>@product.RetailerName</td>
+                    <td>@product.Retailer.UserName</td>
                     <td><button>Add to chart</button></td>
                 </tr>
             }
@@ -47,14 +51,14 @@ else
 @code {
     private List<Product> products;
     private string username = default!;
+    private ApplicationUser user;
 
     protected override async Task OnInitializedAsync()
     {
         // get retailer's username
         var authstate = await authenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authstate.User;
-        username = user.Identity.Name;
+        user = await userManager.GetUserAsync(authstate.User);
 
-        products = await productService.GetAllCustomerProductsAsync(username);
+        products = await productService.GetAllCustomerProductsAsync(user.UserName);
     }
 }

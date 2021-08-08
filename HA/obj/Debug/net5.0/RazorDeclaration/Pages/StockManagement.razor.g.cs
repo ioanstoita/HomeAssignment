@@ -97,6 +97,13 @@ using Microsoft.AspNetCore.Components.Authorization;
 #line hidden
 #nullable disable
 #nullable restore
+#line 11 "D:\0_Projects\HA\HA\Pages\StockManagement.razor"
+using Microsoft.AspNetCore.Identity;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 3 "D:\0_Projects\HA\HA\Pages\StockManagement.razor"
            [Authorize(Roles = "admin, retailer")]
 
@@ -112,44 +119,47 @@ using Microsoft.AspNetCore.Components.Authorization;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 60 "D:\0_Projects\HA\HA\Pages\StockManagement.razor"
+#line 62 "D:\0_Projects\HA\HA\Pages\StockManagement.razor"
        
     private List<Product> products;
     private Product product = new();
 
-    private string username = default!;
+    //private string username = default!;
+    private ApplicationUser user;
 
 
     protected override async Task OnInitializedAsync()
     {
-        // get retailer's username
+        // get retailer user object
         var authstate = await authenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authstate.User;
-        username = user.Identity.Name;
+        user = await userManager.GetUserAsync(authstate.User);
+        //user = authstate.User;
+        //username = user.Identity.Name;
 
-        products = await productService.GetAllRetailerProductsAsync(username);
+        products = await productService.GetAllRetailerProductsAsync(user.UserName);
     }
 
     public async Task AddProduct()
     {
-        if(!string.IsNullOrEmpty(product.Name) && product.Price > 0)
+        if (!string.IsNullOrEmpty(product.Name) && product.Price > 0)
         {
-            product.RetailerName = username;
+            product.Retailer = user;
             product = await productService.AddProduct(product);
             product = new();
-            products = await productService.GetAllRetailerProductsAsync(username);
+            products = await productService.GetAllRetailerProductsAsync(user.UserName);
         }
     }
 
     public async Task DeleteProduct(Product product)
     {
         await productService.DeleteProduct(product);
-        products = await productService.GetAllRetailerProductsAsync(username);
+        products = await productService.GetAllRetailerProductsAsync(user.UserName);
     }
 
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private UserManager<ApplicationUser> userManager { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private AuthenticationStateProvider authenticationStateProvider { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IProductService productService { get; set; }
     }

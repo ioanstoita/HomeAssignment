@@ -17,6 +17,7 @@ using HA.Areas.Identity;
 using HA.Data;
 using HA.Services;
 using HA.Repositories;
+using HA.Models;
 
 namespace HA
 {
@@ -37,9 +38,15 @@ namespace HA
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            /*services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();           
+                .AddEntityFrameworkStores<ApplicationDbContext>();*/
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>() // </-- here you have to replace `IdenityUser` and `IdentityRole` with `ApplicationUser` and `ApplicationRole` respectively
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultUI()
+            .AddDefaultTokenProviders();
+
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 
             services.AddRazorPages();

@@ -10,6 +10,8 @@ namespace HA.Models
     {
         public Guid Id { get; set; }
 
+        public virtual ApplicationUser Retailer { get; set; }
+
         public string Name { get; set; }
 
         public double Price { get; set; }
@@ -19,6 +21,6 @@ namespace HA.Models
         [NotMapped]
         public double RebatePrice { get; set; }
 
-        public string RetailerName { get; set; }
+        //public string RetailerName { get; set; }
     }
 }

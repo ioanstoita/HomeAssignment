@@ -20,12 +20,12 @@ namespace HA.Repository.Repositories
 
         public async Task<List<Rebate>> GetAllRetailerRebates(string RetailerName)
         {
-            return await _context.Rebates.Where(x => x.RetailerName == RetailerName).ToListAsync();
+            return await _context.Rebates.Include(x => x.Customer).Where(x => x.Retailer.UserName == RetailerName).ToListAsync();
         }
 
         public async Task<List<Rebate>> GetAllCustomerRebates(string CustomerName)
         {
-            return await _context.Rebates.Where(x => x.CustomerName == CustomerName).ToListAsync();
+            return await _context.Rebates.Include(x => x.Customer).Where(x => x.Customer.UserName == CustomerName).ToListAsync();
         }
     }
 }

@@ -69,29 +69,43 @@ using HA.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "D:\0_Projects\HA\HA\Pages\Shop.razor"
+#line 5 "D:\0_Projects\HA\HA\Pages\Shop.razor"
 using HA.Models;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 4 "D:\0_Projects\HA\HA\Pages\Shop.razor"
+#line 6 "D:\0_Projects\HA\HA\Pages\Shop.razor"
 using HA.Services;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 6 "D:\0_Projects\HA\HA\Pages\Shop.razor"
+#line 8 "D:\0_Projects\HA\HA\Pages\Shop.razor"
 using System.Security.Claims;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 7 "D:\0_Projects\HA\HA\Pages\Shop.razor"
+#line 9 "D:\0_Projects\HA\HA\Pages\Shop.razor"
 using Microsoft.AspNetCore.Components.Authorization;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 11 "D:\0_Projects\HA\HA\Pages\Shop.razor"
+using Microsoft.AspNetCore.Identity;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 3 "D:\0_Projects\HA\HA\Pages\Shop.razor"
+           [Authorize()]
 
 #line default
 #line hidden
@@ -105,24 +119,25 @@ using Microsoft.AspNetCore.Components.Authorization;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 47 "D:\0_Projects\HA\HA\Pages\Shop.razor"
+#line 51 "D:\0_Projects\HA\HA\Pages\Shop.razor"
        
     private List<Product> products;
     private string username = default!;
+    private ApplicationUser user;
 
     protected override async Task OnInitializedAsync()
     {
         // get retailer's username
         var authstate = await authenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authstate.User;
-        username = user.Identity.Name;
+        user = await userManager.GetUserAsync(authstate.User);
 
-        products = await productService.GetAllCustomerProductsAsync(username);
+        products = await productService.GetAllCustomerProductsAsync(user.UserName);
     }
 
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private UserManager<ApplicationUser> userManager { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private AuthenticationStateProvider authenticationStateProvider { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IProductService productService { get; set; }
     }

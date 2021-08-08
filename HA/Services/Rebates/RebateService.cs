@@ -1,5 +1,6 @@
 ﻿using HA.Models;
 using HA.Repositories;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,22 +10,28 @@ namespace HA.Services
 {
     public class RebateService : IRebateService
     {
-        public IUnitOfWork _repository;
+        private readonly IUnitOfWork _repository;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public RebateService(IUnitOfWork repository)
+        public RebateService(IUnitOfWork repository, UserManager<ApplicationUser> userManager)
         {
             _repository = repository;
+            _userManager = userManager;
         }
 
         public async Task<Rebate> AddRebate(Rebate rebate)
         {
-            if(rebate.RebatePercent > 0 && rebate.RebatePercent < 100
-                && rebate.RetailerName is not null
-                && rebate.CustomerName is not null)
+            ApplicationUser customer = await _userManager.FindByNameAsync(rebate.Customer.UserName);
+            
+            if (rebate.RebatePercent > 0 && rebate.RebatePercent < 100
+                && rebate.Retailer is not null
+                && customer is not null)
             {
+                rebate.Customer = customer;
                 _repository.Rebates.Add(rebate);
                 await _repository.SaveChangesAsync();
             }
+
             return rebate;
         }
 

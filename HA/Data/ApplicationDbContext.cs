@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 using HA.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace HA.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string, ApplicationUserClaim,
+    ApplicationUserRole, IdentityUserLogin<string>,
+    IdentityRoleClaim<string>, IdentityUserToken<string>>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -29,7 +32,7 @@ namespace HA.Data
                 entity.Property(x => x.Name).IsRequired(false).HasMaxLength(255);
                 entity.Property(x => x.Price).IsRequired(true).HasDefaultValue(0);
                 entity.Property(x => x.StandardPrice).IsRequired(true).HasDefaultValue(false);
-                entity.Property(x => x.RetailerName).IsRequired(true).HasMaxLength(320);
+                //entity.Property(x => x.RetailerName).IsRequired(true).HasMaxLength(320);
                 
             });
 
@@ -38,12 +41,34 @@ namespace HA.Data
                 entity.HasKey(x => x.Id);
                 entity.Property(x => x.Id).ValueGeneratedOnAdd();
 
-                entity.Property(x => x.RetailerName).IsRequired(true).HasMaxLength(320);
-                entity.Property(x => x.CustomerName).IsRequired(true).HasMaxLength(320);
+                //entity.Property(x => x.RetailerName).IsRequired(true).HasMaxLength(320);
+                //entity.Property(x => x.CustomerName).IsRequired(true).HasMaxLength(320);
 
                 entity.Property(x => x.RebatePercent).IsRequired(true).HasDefaultValue(0);
                 //entity.Property(x => x.RebateType).IsRequired(true).HasDefaultValue(0);
                 //entity.Property(x => x.RebateValue).IsRequired(true).HasDefaultValue(0);
+            });
+
+            modelBuilder.Entity<ApplicationUser>(entity =>
+            {
+                entity.HasMany(x => x.Products).WithOne(x => x.Retailer);
+                entity.HasMany(x => x.RetailerRebates).WithOne(x => x.Retailer);
+                //entity.HasMany(x => x.CustomerRebates).WithOne(x => x.Customer);
+            });
+
+            modelBuilder.Entity<ApplicationUserRole>(userRole =>
+            {
+                userRole.HasKey(ur => new { ur.UserId, ur.RoleId });
+
+                userRole.HasOne(ur => ur.Role)
+                    .WithMany(r => r.UserRoles)
+                    .HasForeignKey(ur => ur.RoleId)
+                    .IsRequired();
+
+                userRole.HasOne(ur => ur.User)
+                    .WithMany(r => r.UserRoles)
+                    .HasForeignKey(ur => ur.UserId)
+                    .IsRequired();
             });
         }
 

@@ -8,6 +8,8 @@
 @using System.Security.Claims
 @using Microsoft.AspNetCore.Components.Authorization
 @inject AuthenticationStateProvider authenticationStateProvider
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> userManager
 
 <h1>Rebate Management</h1>
 
@@ -15,19 +17,19 @@
 
 
 <div>
-    <EditForm Model="@rebate" OnSubmit="@AddRebate">
-        <label>Customer Name</label>
-        <input @bind="rebate.CustomerName" placeholder="MyCustomer@gmail.com" />
-        <label>Rebate Type</label>
-        <!--<select @bind="rebate.RebateType">
-            <option value="0">Percent (%)</option>
-            <option value="1">Value ($)</option>
-        </select>-->
-        <label>Rebate Percent (%)</label>
-        <input @bind="rebate.RebatePercent" placeholder="0" />
+        <EditForm Model="@newRebate" OnSubmit="@AddRebate">
+            <label>Customer Name</label>
+            <input @bind="newRebate.Customer.UserName" placeholder="MyCustomer@gmail.com" />
+            <label>Rebate Type</label>
+            <!--<select @bind="rebate.RebateType">
+                <option value="0">Percent (%)</option>
+                <option value="1">Value ($)</option>
+            </select>-->
+            <label>Rebate Percent (%)</label>
+            <input @bind="newRebate.RebatePercent" placeholder="0" />
 
-        <input type="submit" value="Add rebate" class="btn btn-primary" />
-    </EditForm>
+            <input type="submit" value="Add rebate" class="btn btn-primary" />
+        </EditForm>
 </div>
 
 
@@ -48,13 +50,13 @@ else
         <tbody>
             @foreach (var rebate in rebates)
             {
-            <tr>
-                <!--<td>@product.Id</td>-->
-                <td>@rebate.CustomerName</td>
-                <td>@rebate.RebatePercent%</td>
-                <!--<td>@rebate.RebateValue@(rebate.RebateType == 0 ? "%" : "$")</td>-->
-                <td><button @onclick="(() => DeleteRebate(rebate))">Delete</button></td>
-            </tr>
+                <tr>
+                    <!--<td>@product.Id</td>-->
+                    <td>@rebate.Customer.UserName</td>
+                    <td>@rebate.RebatePercent%</td>
+                    <!--<td>@rebate.RebateValue@(rebate.RebateType == 0 ? "%" : "$")</td>-->
+                    <td><button @onclick="(() => DeleteRebate(rebate))">Delete</button></td>
+                </tr>
             }
         </tbody>
     </table>
@@ -62,35 +64,34 @@ else
 
 @code {
     private List<Rebate> rebates;
-    private Rebate rebate = new();
+    private Rebate newRebate = new Rebate { Customer = new ApplicationUser() };
 
-    private string username = default!;
+    private ApplicationUser user;
 
 
     protected override async Task OnInitializedAsync()
     {
         // get retailer's username
         var authstate = await authenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authstate.User;
-        username = user.Identity.Name;
+        user = await userManager.GetUserAsync(authstate.User);
 
-        rebates = await rebateService.GetAllRetailerRebatesAsync(username);
+        rebates = await rebateService.GetAllRetailerRebatesAsync(user.UserName);
     }
 
     public async Task AddRebate()
     {
-        if (!string.IsNullOrEmpty(rebate.CustomerName) && rebate.RebatePercent > 0 && rebate.RebatePercent <= 100)
+        if (!string.IsNullOrEmpty(newRebate.Customer.UserName) && newRebate.RebatePercent > 0 && newRebate.RebatePercent <= 100)
         {
-            rebate.RetailerName = username;
-            rebate = await rebateService.AddRebate(rebate);
-            rebate = new();
-            rebates = await rebateService.GetAllRetailerRebatesAsync(username);
+            newRebate.Retailer = user;
+            newRebate = await rebateService.AddRebate(newRebate);
+            newRebate = new Rebate { Customer = new ApplicationUser() };
+            rebates = await rebateService.GetAllRetailerRebatesAsync(user.UserName);
         }
     }
 
     public async Task DeleteRebate(Rebate rebate)
     {
         await rebateService.DeleteRebate(rebate);
-        rebates = await rebateService.GetAllRetailerRebatesAsync(username);
+        rebates = await rebateService.GetAllRetailerRebatesAsync(user.UserName);
     }
 }

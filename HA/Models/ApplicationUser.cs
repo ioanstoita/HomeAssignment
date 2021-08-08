@@ -10,6 +10,10 @@ namespace HA.Models
     {
         public ICollection<ApplicationUserRole> UserRoles { get; set; }
         public ICollection<ApplicationUserClaim> Claims { get; set; }
+        public ICollection<Product> Products { get; set; }
+        public ICollection<Rebate>  RetailerRebates { get; set; }
+        //public ICollection<Rebate>  CustomerRebates { get; set; }
+        //public string Name { get; set; }
     }
     public class ApplicationUserClaim : IdentityUserClaim<string>
     {

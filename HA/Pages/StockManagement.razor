@@ -8,6 +8,8 @@
 @using System.Security.Claims
 @using Microsoft.AspNetCore.Components.Authorization
 @inject AuthenticationStateProvider authenticationStateProvider
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> userManager
 
 <h1>Stock Management</h1>
 
@@ -45,13 +47,13 @@ else
         <tbody>
             @foreach (var product in products)
             {
-            <tr>
-                <!--<td>@product.Id</td>-->
-                <td>@product.Name</td>
-                <td>@product.Price</td>
-                <td>@product.StandardPrice</td>
-                <td><button @onclick="(() => DeleteProduct(product))">Delete</button></td>
-            </tr>
+                <tr>
+                    <!--<td>@product.Id</td>-->
+                    <td>@product.Name</td>
+                    <td>@product.Price</td>
+                    <td>@product.StandardPrice</td>
+                    <td><button @onclick="(() => DeleteProduct(product))">Delete</button></td>
+                </tr>
             }
         </tbody>
     </table>
@@ -61,33 +63,35 @@ else
     private List<Product> products;
     private Product product = new();
 
-    private string username = default!;
+    //private string username = default!;
+    private ApplicationUser user;
 
 
     protected override async Task OnInitializedAsync()
     {
-        // get retailer's username
+        // get retailer user object
         var authstate = await authenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authstate.User;
-        username = user.Identity.Name;
+        user = await userManager.GetUserAsync(authstate.User);
+        //user = authstate.User;
+        //username = user.Identity.Name;
 
-        products = await productService.GetAllRetailerProductsAsync(username);
+        products = await productService.GetAllRetailerProductsAsync(user.UserName);
     }
 
     public async Task AddProduct()
     {
-        if(!string.IsNullOrEmpty(product.Name) && product.Price > 0)
+        if (!string.IsNullOrEmpty(product.Name) && product.Price > 0)
         {
-            product.RetailerName = username;
+            product.Retailer = user;
             product = await productService.AddProduct(product);
             product = new();
-            products = await productService.GetAllRetailerProductsAsync(username);
+            products = await productService.GetAllRetailerProductsAsync(user.UserName);
         }
     }
 
     public async Task DeleteProduct(Product product)
     {
         await productService.DeleteProduct(product);
-        products = await productService.GetAllRetailerProductsAsync(username);
+        products = await productService.GetAllRetailerProductsAsync(user.UserName);
     }
 }

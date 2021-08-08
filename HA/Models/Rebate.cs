@@ -9,11 +9,8 @@ namespace HA.Models
     {
         public Guid Id { get; set; }
 
-        public string RetailerName { get; set; }
-
-        // if empty  -> valid for all customers
-        // if !empty -> valid for that customer
-        public string CustomerName { get; set; }
+        public virtual ApplicationUser Retailer { get; set; }
+        public virtual ApplicationUser Customer { get; set; }
 
         public double RebatePercent { get; set; }
 

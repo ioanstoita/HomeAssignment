@@ -97,6 +97,13 @@ using Microsoft.AspNetCore.Components.Authorization;
 #line hidden
 #nullable disable
 #nullable restore
+#line 11 "D:\0_Projects\HA\HA\Pages\RebateManager.razor"
+using Microsoft.AspNetCore.Identity;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 3 "D:\0_Projects\HA\HA\Pages\RebateManager.razor"
            [Authorize(Roles = "admin, retailer")]
 
@@ -112,44 +119,44 @@ using Microsoft.AspNetCore.Components.Authorization;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 63 "D:\0_Projects\HA\HA\Pages\RebateManager.razor"
+#line 65 "D:\0_Projects\HA\HA\Pages\RebateManager.razor"
        
     private List<Rebate> rebates;
-    private Rebate rebate = new();
+    private Rebate newRebate = new Rebate { Customer = new ApplicationUser() };
 
-    private string username = default!;
+    private ApplicationUser user;
 
 
     protected override async Task OnInitializedAsync()
     {
         // get retailer's username
         var authstate = await authenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authstate.User;
-        username = user.Identity.Name;
+        user = await userManager.GetUserAsync(authstate.User);
 
-        rebates = await rebateService.GetAllRetailerRebatesAsync(username);
+        rebates = await rebateService.GetAllRetailerRebatesAsync(user.UserName);
     }
 
     public async Task AddRebate()
     {
-        if (!string.IsNullOrEmpty(rebate.CustomerName) && rebate.RebatePercent > 0 && rebate.RebatePercent <= 100)
+        if (!string.IsNullOrEmpty(newRebate.Customer.UserName) && newRebate.RebatePercent > 0 && newRebate.RebatePercent <= 100)
         {
-            rebate.RetailerName = username;
-            rebate = await rebateService.AddRebate(rebate);
-            rebate = new();
-            rebates = await rebateService.GetAllRetailerRebatesAsync(username);
+            newRebate.Retailer = user;
+            newRebate = await rebateService.AddRebate(newRebate);
+            newRebate = new Rebate { Customer = new ApplicationUser() };
+            rebates = await rebateService.GetAllRetailerRebatesAsync(user.UserName);
         }
     }
 
     public async Task DeleteRebate(Rebate rebate)
     {
         await rebateService.DeleteRebate(rebate);
-        rebates = await rebateService.GetAllRetailerRebatesAsync(username);
+        rebates = await rebateService.GetAllRetailerRebatesAsync(user.UserName);
     }
 
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private UserManager<ApplicationUser> userManager { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private AuthenticationStateProvider authenticationStateProvider { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IRebateService rebateService { get; set; }
     }

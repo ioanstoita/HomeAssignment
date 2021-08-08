@@ -11,7 +11,7 @@ namespace HA.Services
 {
     public class ProductService : IProductService
     {
-        public IUnitOfWork _repository;
+        private readonly IUnitOfWork _repository;
 
         public ProductService(IUnitOfWork repository)
         {
@@ -25,15 +25,17 @@ namespace HA.Services
 
         public async Task<List<Product>> GetAllCustomerProductsAsync(string CustomerName)
         {
-            List<Product> products = await _repository.Products.GetAllAsync();
-            List<Rebate> rebates = await _repository.Rebates.GetAllCustomerRebates(CustomerName);
+            List<Product> products = await _repository.Products.GetAllProductsWithRebatesAsync(CustomerName);
+            //List<Rebate> rebates = await _repository.Rebates.GetAllCustomerRebates(CustomerName);
 
             foreach(Product product in products)
             {
                 // calculate rebate only if applicable for that product
                 if(!product.StandardPrice)
                 {
-                    List<Rebate> matchRebates = rebates.Where(x => x.RetailerName == product.RetailerName).ToList();
+                    //rebates.Where(x => x.Retailer.UserName == product.Retailer.UserName).ToList();
+
+                    List<Rebate> matchRebates = product.Retailer.RetailerRebates.ToList();
                     if(matchRebates.Count > 0)
                     {
                         double maxRebate = matchRebates.Max(y => y.RebatePercent);
@@ -54,7 +56,7 @@ namespace HA.Services
 
         public async Task<Product> AddProduct(Product product)
         {
-            if(product.Price > 0 && product.RetailerName is not null)
+            if(product.Price > 0 && product.Retailer.UserName is not null)
             {
                 _repository.Products.Add(product);
                 await _repository.SaveChangesAsync();
