@@ -28,7 +28,7 @@ namespace HA.Data
 
                 entity.Property(x => x.Name).IsRequired(false).HasMaxLength(255);
                 entity.Property(x => x.Price).IsRequired(true).HasDefaultValue(0);
-                entity.Property(x => x.StandardPrice).IsRequired(true).HasDefaultValue(false);
+                entity.Property(x => x.IsStandardPrice).IsRequired(true).HasDefaultValue(false);
                 
             });
 

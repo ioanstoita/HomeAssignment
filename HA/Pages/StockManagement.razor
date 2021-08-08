@@ -23,7 +23,7 @@
         <label>Product Price</label>
         <input @bind="product.Price" placeholder="0" />
         <label>Standard Price ($)</label>
-        <input type="checkbox" @bind="product.StandardPrice" />
+        <input type="checkbox" @bind="product.IsStandardPrice" />
         <input type="submit" value="Add product" class="btn btn-primary" />
     </EditForm>
 </div>
@@ -51,7 +51,7 @@ else
                     <!--<td>@product.Id</td>-->
                     <td>@product.Name</td>
                     <td>@product.Price</td>
-                    <td>@product.StandardPrice</td>
+                    <td>@product.IsStandardPrice</td>
                     <td><button @onclick="(() => DeleteProduct(product))">Delete</button></td>
                 </tr>
             }

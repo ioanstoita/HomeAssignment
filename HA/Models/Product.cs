@@ -16,7 +16,7 @@ namespace HA.Models
         public double Price { get; set; }
 
         // if true, rebates won't apply to this product
-        public bool StandardPrice { get; set; }
+        public bool IsStandardPrice { get; set; }
 
         [NotMapped] // used only when calculating rebates; not included in DB
         public double RebatePrice { get; set; }

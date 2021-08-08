@@ -21,11 +21,10 @@ namespace HA.Services
         public async Task<List<Product>> GetAllCustomerProductsAsync(string CustomerName)
         {
             List<Product> products = await _repository.Products.GetAllProductsWithRebatesAsync(CustomerName);
-            //List<Rebate> rebates = await _repository.Rebates.GetAllCustomerRebates(CustomerName);
 
             foreach(Product product in products)
             {
-                if(!product.StandardPrice)
+                if(!product.IsStandardPrice)
                 {
                     List<Rebate> matchRebates = product.Retailer.Rebates.Where(x => x.Retailer.UserName != CustomerName).ToList();
                     if(matchRebates.Count > 0)
