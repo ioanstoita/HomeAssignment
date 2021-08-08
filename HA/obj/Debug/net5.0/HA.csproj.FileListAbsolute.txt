@@ -98,8 +98,8 @@ D:\0_Projects\HA\HA\obj\Debug\net5.0\HA.pdb
 D:\0_Projects\HA\HA\obj\Debug\net5.0\HA.genruntimeconfig.cache
 D:\0_Projects\HA\HA\obj\Debug\net5.0\RazorDeclaration\Pages\Shop.razor.g.cs
 D:\0_Projects\HA\HA\obj\Debug\net5.0\Razor\Pages\Shop.razor.g.cs
-D:\0_Projects\HA\HA\obj\Debug\net5.0\HA.csproj.AssemblyReference.cache
 D:\0_Projects\HA\HA\obj\Debug\net5.0\RazorDeclaration\Pages\StockManagement.razor.g.cs
 D:\0_Projects\HA\HA\obj\Debug\net5.0\RazorDeclaration\Pages\RebateManager.razor.g.cs
 D:\0_Projects\HA\HA\obj\Debug\net5.0\Razor\Pages\RebateManager.razor.g.cs
 D:\0_Projects\HA\HA\obj\Debug\net5.0\Razor\Pages\StockManagement.razor.g.cs
+D:\0_Projects\HA\HA\obj\Debug\net5.0\HA.csproj.AssemblyReference.cache

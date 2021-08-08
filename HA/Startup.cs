@@ -41,7 +41,6 @@ namespace HA
             /*services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();*/
-
             services.AddIdentity<ApplicationUser, ApplicationRole>() // </-- here you have to replace `IdenityUser` and `IdentityRole` with `ApplicationUser` and `ApplicationRole` respectively
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultUI()

@@ -55,7 +55,7 @@ else
                     <td>@rebate.Customer.UserName</td>
                     <td>@rebate.RebatePercent%</td>
                     <!--<td>@rebate.RebateValue@(rebate.RebateType == 0 ? "%" : "$")</td>-->
-                    <td><button @onclick="(() => DeleteRebate(rebate))">Delete</button></td>
+                    <td><button @onclick="(() => DeleteRebate(rebate))" class="btn btn-primary">Delete</button></td>
                 </tr>
             }
         </tbody>

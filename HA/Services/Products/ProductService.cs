@@ -35,7 +35,7 @@ namespace HA.Services
                 {
                     //rebates.Where(x => x.Retailer.UserName == product.Retailer.UserName).ToList();
 
-                    List<Rebate> matchRebates = product.Retailer.RetailerRebates.ToList();
+                    List<Rebate> matchRebates = product.Retailer.Rebates.ToList();
                     if(matchRebates.Count > 0)
                     {
                         double maxRebate = matchRebates.Max(y => y.RebatePercent);

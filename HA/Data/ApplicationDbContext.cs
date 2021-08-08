@@ -52,8 +52,8 @@ namespace HA.Data
             modelBuilder.Entity<ApplicationUser>(entity =>
             {
                 entity.HasMany(x => x.Products).WithOne(x => x.Retailer);
-                entity.HasMany(x => x.RetailerRebates).WithOne(x => x.Retailer);
-                //entity.HasMany(x => x.CustomerRebates).WithOne(x => x.Customer);
+                entity.HasMany(x => x.Rebates).WithOne(x => x.Retailer);
+                //entity.HasMany(x => x.Rebates).WithOne(x => x.Customer);
             });
 
             modelBuilder.Entity<ApplicationUserRole>(userRole =>
