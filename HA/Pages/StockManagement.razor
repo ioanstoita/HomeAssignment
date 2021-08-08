@@ -20,7 +20,7 @@
         <input @bind="product.Name" placeholder="e.g., Chair" />
         <label>Product Price</label>
         <input @bind="product.Price" placeholder="0" />
-        <label>Standard Price</label>
+        <label>Standard Price ($)</label>
         <input type="checkbox" @bind="product.StandardPrice" />
         <input type="submit" value="Add product" class="btn btn-primary" />
     </EditForm>
@@ -37,8 +37,8 @@ else
         <thead>
             <tr>
                 <!--<th>Id</th>-->
-                <th>Name.</th>
-                <th>Price. ($)</th>
+                <th>Name</th>
+                <th>Price</th>
                 <th>Standard Price</th>
             </tr>
         </thead>
@@ -76,7 +76,7 @@ else
 
     public async Task AddProduct()
     {
-        if(!string.IsNullOrEmpty(product.Name))
+        if(!string.IsNullOrEmpty(product.Name) && product.Price > 0)
         {
             product.RetailerName = username;
             product = await productService.AddProduct(product);

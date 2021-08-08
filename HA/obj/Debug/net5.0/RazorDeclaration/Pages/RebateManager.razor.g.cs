@@ -112,7 +112,7 @@ using Microsoft.AspNetCore.Components.Authorization;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 60 "D:\0_Projects\HA\HA\Pages\RebateManager.razor"
+#line 63 "D:\0_Projects\HA\HA\Pages\RebateManager.razor"
        
     private List<Rebate> rebates;
     private Rebate rebate = new();
@@ -132,7 +132,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 
     public async Task AddRebate()
     {
-        if (!string.IsNullOrEmpty(rebate.CustomerName) && (rebate.RebateValue > 0 || rebate.RebatePercent > 0))
+        if (!string.IsNullOrEmpty(rebate.CustomerName) && rebate.RebatePercent > 0 && rebate.RebatePercent <= 100)
         {
             rebate.RetailerName = username;
             rebate = await rebateService.AddRebate(rebate);

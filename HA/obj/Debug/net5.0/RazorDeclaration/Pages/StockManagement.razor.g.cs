@@ -132,7 +132,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 
     public async Task AddProduct()
     {
-        if(!string.IsNullOrEmpty(product.Name))
+        if(!string.IsNullOrEmpty(product.Name) && product.Price > 0)
         {
             product.RetailerName = username;
             product = await productService.AddProduct(product);

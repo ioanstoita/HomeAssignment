@@ -1,6 +1,7 @@
 ﻿using HA.Data;
 using HA.Models;
 using HA.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,21 +11,21 @@ namespace HA.Repository.Repositories
 {
     public class RebatesRepository : Repository<Rebate>, IRebateRepository
     {
-        private readonly ApplicationDbContext _context;
+        private readonly new ApplicationDbContext _context;
 
         public RebatesRepository(ApplicationDbContext context) : base(context)
         {
             _context = context;
         }
 
-        public List<Rebate> GetAllRetailerRebates(string RetailerName)
+        public async Task<List<Rebate>> GetAllRetailerRebates(string RetailerName)
         {
-            return _context.Set<Rebate>().Where(x => x.RetailerName == RetailerName).ToList<Rebate>();
+            return await _context.Rebates.Where(x => x.RetailerName == RetailerName).ToListAsync();
         }
 
-        public List<Rebate> GetAllCustomerRebates(string CustomerName)
+        public async Task<List<Rebate>> GetAllCustomerRebates(string CustomerName)
         {
-            return _context.Set<Rebate>().Where(x => x.CustomerName == CustomerName).ToList<Rebate>();
+            return await _context.Rebates.Where(x => x.CustomerName == CustomerName).ToListAsync();
         }
     }
 }

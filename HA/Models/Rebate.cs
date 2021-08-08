@@ -10,32 +10,40 @@ namespace HA.Models
         public Guid Id { get; set; }
 
         public string RetailerName { get; set; }
+
+        // if empty  -> valid for all customers
+        // if !empty -> valid for that customer
         public string CustomerName { get; set; }
 
-        public double RebateValue { get; set; }
         public double RebatePercent { get; set; }
 
 
+        // false - can't cumulate with other rebates
+        // true  - can cumulate with other rebates
+        //public bool Cumulative { get; set; }
 
 
-        // if empty     -> valid for all customers
-        // if not empty -> valid for that customer
-        //public string CustomerName { get; set; }
+        // rebate expiry date
+        //public DateTime ExpiryDate { get; set; }
+        // rebate expiry 
+        //public bool ExpiresAfterNumberOfUses { get; set; }
+        //public int NumberOfUsesAvailable { get; set; }
+
+
+        // volume discount thresholds
+        //public int VolumeDiscount_min { get; set; }
+        //public int VolumeDiscount_max { get; set; }
+
+
+        // if empty  -> rebase for all retailer's products
+        // if !empty -> rebase for this product only
+        //public Guid ProductId { get; set; }
+
+
 
         // 0 -> value   discount $
         // 1 -> percent discount %
-        //public byte RebateType { get; set; }
+        //public byte   RebateType { get; set; }
         //public double RebateValue { get; set; }
-
-        //public string ProductId { get; set; }
-
-
-        // Volume discount;
-        // if 0 -> ignore;
-        // if > 0 -> discount will apply only if customers buys more products than this threshold
-        //public int VolumeDiscountMinThreshold { get; set; }
-
-        // Discount for one product only
-        //public Guid ProductId { get; set; }
     }
 }

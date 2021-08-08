@@ -20,12 +20,29 @@ namespace HA.Services
 
         public async Task<List<Product>> GetAllProductsAsync()
         {
-            /*var products = await _context.Products.Where(x => x.Name.ToLower().Contains("birou")).Select(x => new Product
-            {
-                Price = x.Price
-            }).ToListAsync();*/
+            return await _repository.Products.GetAllAsync();
+        }
 
-            var products = await _repository.Products.GetAllAsync();
+        public async Task<List<Product>> GetAllProductsAsync(string CustomerName)
+        {
+            List<Product> products = await GetAllProductsAsync();
+            List<Rebate> rebates = _repository.Rebates.GetAllCustomerRebates(CustomerName);
+
+            foreach(Product product in products)
+            {
+                // calculate rebate only if applicable for that product
+                if(!product.StandardPrice)
+                {
+                    List<Rebate> matchRebates = rebates.Where(x => x.RetailerName == product.RetailerName).ToList();
+                    if(matchRebates.Count > 0)
+                    {
+                        double maxRebate = matchRebates.Max(y => y.RebatePercent);
+
+                        product.RebatePrice = product.Price - (product.Price/100) * maxRebate;
+                        product.RebatePrice = Math.Round(product.RebatePrice, 2);
+                    }
+                }
+            }
 
             return products;
         }
@@ -37,8 +54,11 @@ namespace HA.Services
 
         public async Task<Product> AddProduct(Product product)
         {
-            _repository.Products.Add(product);
-            await _repository.SaveChangesAsync();
+            if(product.Price > 0 && product.RetailerName is not null)
+            {
+                _repository.Products.Add(product);
+                await _repository.SaveChangesAsync();
+            }
             return product;
         }
 

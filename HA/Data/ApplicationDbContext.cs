@@ -28,8 +28,9 @@ namespace HA.Data
 
                 entity.Property(x => x.Name).IsRequired(false).HasMaxLength(255);
                 entity.Property(x => x.Price).IsRequired(true).HasDefaultValue(0);
-                entity.Property(x => x.RetailerName).IsRequired(true).HasMaxLength(320);
                 entity.Property(x => x.StandardPrice).IsRequired(true).HasDefaultValue(false);
+                entity.Property(x => x.RetailerName).IsRequired(true).HasMaxLength(320);
+                
             });
 
             modelBuilder.Entity<Rebate>(entity =>
@@ -40,8 +41,9 @@ namespace HA.Data
                 entity.Property(x => x.RetailerName).IsRequired(true).HasMaxLength(320);
                 entity.Property(x => x.CustomerName).IsRequired(true).HasMaxLength(320);
 
-                entity.Property(x => x.RebateValue).IsRequired(true).HasDefaultValue(0);
                 entity.Property(x => x.RebatePercent).IsRequired(true).HasDefaultValue(0);
+                //entity.Property(x => x.RebateType).IsRequired(true).HasDefaultValue(0);
+                //entity.Property(x => x.RebateValue).IsRequired(true).HasDefaultValue(0);
             });
         }
 

@@ -3,6 +3,9 @@
 @using HA.Models
 @using HA.Services
 @inject IProductService productService
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider authenticationStateProvider
 
 <h1>Shop</h1>
 
@@ -21,20 +24,21 @@ else
             <tr>
                 <!--<th>Id</th>-->
                 <th>Name</th>
-                <th>Price ($)</th>
+                <th>Price</th>
                 <th>Retailer</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var product in products)
             {
-            <tr>
-                <!--<td>@product.Id</td>-->
-                <td>@product.Name</td>
-                <td>@product.Price</td>
-                <td>@product.RetailerName</td>
-                <td><button>Add to chart</button></td>
-            </tr>
+                <tr>
+                    <!--<td>@product.Id</td>-->
+                    <td>@product.Name</td>
+                    <td>@(product.RebatePrice > 0 ? (product.RebatePrice + "$ from " + product.Price + "$") : (product.Price + "$"))</td>
+                    <!--<td>@product.Price</td>-->
+                    <td>@product.RetailerName</td>
+                    <td><button>Add to chart</button></td>
+                </tr>
             }
         </tbody>
     </table>
@@ -42,9 +46,15 @@ else
 
 @code {
     private List<Product> products;
+    private string username = default!;
 
     protected override async Task OnInitializedAsync()
     {
-        products = await productService.GetAllProductsAsync();
+        // get retailer's username
+        var authstate = await authenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authstate.User;
+        username = user.Identity.Name;
+
+        products = await productService.GetAllProductsAsync(username);
     }
 }

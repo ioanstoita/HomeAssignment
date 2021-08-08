@@ -18,8 +18,13 @@ namespace HA.Services
 
         public async Task<Rebate> AddRebate(Rebate rebate)
         {
-            _repository.Rebates.Add(rebate);
-            await _repository.SaveChangesAsync();
+            if(rebate.RebatePercent > 0 && rebate.RebatePercent < 100
+                && rebate.RetailerName is not null
+                && rebate.CustomerName is not null)
+            {
+                _repository.Rebates.Add(rebate);
+                await _repository.SaveChangesAsync();
+            }
             return rebate;
         }
 

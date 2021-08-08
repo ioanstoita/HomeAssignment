@@ -18,10 +18,14 @@
     <EditForm Model="@rebate" OnSubmit="@AddRebate">
         <label>Customer Name</label>
         <input @bind="rebate.CustomerName" placeholder="MyCustomer@gmail.com" />
-        <label>Rebate Value ($)</label>
-        <input @bind="rebate.RebateValue" placeholder="0" />
+        <label>Rebate Type</label>
+        <!--<select @bind="rebate.RebateType">
+            <option value="0">Percent (%)</option>
+            <option value="1">Value ($)</option>
+        </select>-->
         <label>Rebate Percent (%)</label>
         <input @bind="rebate.RebatePercent" placeholder="0" />
+
         <input type="submit" value="Add rebate" class="btn btn-primary" />
     </EditForm>
 </div>
@@ -38,20 +42,19 @@ else
             <tr>
                 <!--<th>Id</th>-->
                 <th>Customer Name</th>
-                <th>Rebate Value ($)</th>
-                <th>Rebate Percent (%)</th>
+                <th>Rebate Value</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var rebate in rebates)
             {
-                <tr>
-                    <!--<td>@product.Id</td>-->
-                    <td>@rebate.CustomerName</td>
-                    <td>@rebate.RebateValue</td>
-                    <td>@rebate.RebatePercent</td>
-                    <td><button @onclick="(() => DeleteRebate(rebate))">Delete</button></td>
-                </tr>
+            <tr>
+                <!--<td>@product.Id</td>-->
+                <td>@rebate.CustomerName</td>
+                <td>@rebate.RebatePercent%</td>
+                <!--<td>@rebate.RebateValue@(rebate.RebateType == 0 ? "%" : "$")</td>-->
+                <td><button @onclick="(() => DeleteRebate(rebate))">Delete</button></td>
+            </tr>
             }
         </tbody>
     </table>
@@ -76,7 +79,7 @@ else
 
     public async Task AddRebate()
     {
-        if (!string.IsNullOrEmpty(rebate.CustomerName) && (rebate.RebateValue > 0 || rebate.RebatePercent > 0))
+        if (!string.IsNullOrEmpty(rebate.CustomerName) && rebate.RebatePercent > 0 && rebate.RebatePercent <= 100)
         {
             rebate.RetailerName = username;
             rebate = await rebateService.AddRebate(rebate);

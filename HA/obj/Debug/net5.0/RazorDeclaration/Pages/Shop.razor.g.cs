@@ -27,13 +27,6 @@ using Microsoft.AspNetCore.Authorization;
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "D:\0_Projects\HA\HA\_Imports.razor"
-using Microsoft.AspNetCore.Components.Authorization;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
 #line 4 "D:\0_Projects\HA\HA\_Imports.razor"
 using Microsoft.AspNetCore.Components.Forms;
 
@@ -89,6 +82,20 @@ using HA.Services;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 6 "D:\0_Projects\HA\HA\Pages\Shop.razor"
+using System.Security.Claims;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 7 "D:\0_Projects\HA\HA\Pages\Shop.razor"
+using Microsoft.AspNetCore.Components.Authorization;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/shop")]
     public partial class Shop : Microsoft.AspNetCore.Components.ComponentBase
     {
@@ -98,18 +105,25 @@ using HA.Services;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 43 "D:\0_Projects\HA\HA\Pages\Shop.razor"
+#line 47 "D:\0_Projects\HA\HA\Pages\Shop.razor"
        
     private List<Product> products;
+    private string username = default!;
 
     protected override async Task OnInitializedAsync()
     {
-        products = await productService.GetAllProductsAsync();
+        // get retailer's username
+        var authstate = await authenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authstate.User;
+        username = user.Identity.Name;
+
+        products = await productService.GetAllProductsAsync(username);
     }
 
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private AuthenticationStateProvider authenticationStateProvider { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IProductService productService { get; set; }
     }
 }
