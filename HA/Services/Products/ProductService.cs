@@ -18,15 +18,15 @@ namespace HA.Services
             _repository = repository;
         }
 
-        public async Task<List<Product>> GetAllProductsAsync()
+        /*public async Task<List<Product>> GetAllProductsAsync()
         {
             return await _repository.Products.GetAllAsync();
-        }
+        }*/
 
-        public async Task<List<Product>> GetAllProductsAsync(string CustomerName)
+        public async Task<List<Product>> GetAllCustomerProductsAsync(string CustomerName)
         {
-            List<Product> products = await GetAllProductsAsync();
-            List<Rebate> rebates = _repository.Rebates.GetAllCustomerRebates(CustomerName);
+            List<Product> products = await _repository.Products.GetAllAsync();
+            List<Rebate> rebates = await _repository.Rebates.GetAllCustomerRebates(CustomerName);
 
             foreach(Product product in products)
             {
@@ -47,9 +47,9 @@ namespace HA.Services
             return products;
         }
 
-        public List<Product> GetAllProducts(string RetailerName)
+        public async Task<List<Product>> GetAllRetailerProductsAsync(string RetailerName)
         {
-            return _repository.Products.GetAllProducts(RetailerName);
+            return await _repository.Products.GetAllProductsAsync(RetailerName);
         }
 
         public async Task<Product> AddProduct(Product product)

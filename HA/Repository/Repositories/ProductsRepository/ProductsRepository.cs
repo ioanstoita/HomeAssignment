@@ -18,7 +18,7 @@ namespace HA.Repository.Repositories
             _context = context;
         }
 
-        public async Task<List<Product>> GetAllProducts(string RetailerName)
+        public async Task<List<Product>> GetAllProductsAsync(string RetailerName)
         {
             List<Product> products = await _context.Products.Where(x => x.RetailerName == RetailerName).ToListAsync();
             return products;

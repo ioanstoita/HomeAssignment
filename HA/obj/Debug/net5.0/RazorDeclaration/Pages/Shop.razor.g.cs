@@ -117,7 +117,7 @@ using Microsoft.AspNetCore.Components.Authorization;
         var user = authstate.User;
         username = user.Identity.Name;
 
-        products = await productService.GetAllProductsAsync(username);
+        products = await productService.GetAllCustomerProductsAsync(username);
     }
 
 #line default

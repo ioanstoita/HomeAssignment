@@ -34,14 +34,14 @@ namespace HA.Services
             await _repository.SaveChangesAsync();
         }
 
-        public List<Rebate> GetAllCustomerRebates(string CustomerName)
+        public async Task<List<Rebate>> GetAllCustomerRebatesAsync(string CustomerName)
         {
-            return _repository.Rebates.GetAllCustomerRebates(CustomerName);
+            return await _repository.Rebates.GetAllCustomerRebates(CustomerName);
         }
 
-        public List<Rebate> GetAllRetailerRebates(string RetailerName)
+        public async Task<List<Rebate>> GetAllRetailerRebatesAsync(string RetailerName)
         {
-            return _repository.Rebates.GetAllRetailerRebates(RetailerName);
+            return await _repository.Rebates.GetAllRetailerRebates(RetailerName);
         }
     }
 }

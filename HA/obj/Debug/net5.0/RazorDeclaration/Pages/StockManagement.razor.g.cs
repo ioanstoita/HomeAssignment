@@ -127,7 +127,7 @@ using Microsoft.AspNetCore.Components.Authorization;
         var user = authstate.User;
         username = user.Identity.Name;
 
-        products = productService.GetAllProducts(username);
+        products = await productService.GetAllRetailerProductsAsync(username);
     }
 
     public async Task AddProduct()
@@ -137,14 +137,14 @@ using Microsoft.AspNetCore.Components.Authorization;
             product.RetailerName = username;
             product = await productService.AddProduct(product);
             product = new();
-            products = productService.GetAllProducts(username);
+            products = await productService.GetAllRetailerProductsAsync(username);
         }
     }
 
     public async Task DeleteProduct(Product product)
     {
         await productService.DeleteProduct(product);
-        products = productService.GetAllProducts(username);
+        products = await productService.GetAllRetailerProductsAsync(username);
     }
 
 #line default

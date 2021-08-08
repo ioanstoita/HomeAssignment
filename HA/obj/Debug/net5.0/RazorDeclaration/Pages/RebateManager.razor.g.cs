@@ -127,7 +127,7 @@ using Microsoft.AspNetCore.Components.Authorization;
         var user = authstate.User;
         username = user.Identity.Name;
 
-        rebates = rebateService.GetAllRetailerRebates(username);
+        rebates = await rebateService.GetAllRetailerRebatesAsync(username);
     }
 
     public async Task AddRebate()
@@ -137,14 +137,14 @@ using Microsoft.AspNetCore.Components.Authorization;
             rebate.RetailerName = username;
             rebate = await rebateService.AddRebate(rebate);
             rebate = new();
-            rebates = rebateService.GetAllRetailerRebates(username);
+            rebates = await rebateService.GetAllRetailerRebatesAsync(username);
         }
     }
 
     public async Task DeleteRebate(Rebate rebate)
     {
         await rebateService.DeleteRebate(rebate);
-        rebates = rebateService.GetAllRetailerRebates(username);
+        rebates = await rebateService.GetAllRetailerRebatesAsync(username);
     }
 
 #line default

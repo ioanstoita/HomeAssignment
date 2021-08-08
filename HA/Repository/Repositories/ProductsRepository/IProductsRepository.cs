@@ -9,6 +9,6 @@ namespace HA.Repository.Repositories
 {
     public interface IProductsRepository : IRepository<Product>
     {
-        Task<List<Product>> GetAllProducts(string RetailerName);
+        Task<List<Product>> GetAllProductsAsync(string RetailerName);
     }
 }
