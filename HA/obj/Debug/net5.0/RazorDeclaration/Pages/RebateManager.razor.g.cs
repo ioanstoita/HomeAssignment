@@ -13,98 +13,98 @@ namespace HA.Pages
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
 #nullable restore
-#line 1 "D:\0_Projects\HA\HA\_Imports.razor"
+#line 1 "C:\0\Projects\HomeAssignment\HA\_Imports.razor"
 using System.Net.Http;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "D:\0_Projects\HA\HA\_Imports.razor"
+#line 2 "C:\0\Projects\HomeAssignment\HA\_Imports.razor"
 using Microsoft.AspNetCore.Authorization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 4 "D:\0_Projects\HA\HA\_Imports.razor"
+#line 4 "C:\0\Projects\HomeAssignment\HA\_Imports.razor"
 using Microsoft.AspNetCore.Components.Forms;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 5 "D:\0_Projects\HA\HA\_Imports.razor"
+#line 5 "C:\0\Projects\HomeAssignment\HA\_Imports.razor"
 using Microsoft.AspNetCore.Components.Routing;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 6 "D:\0_Projects\HA\HA\_Imports.razor"
+#line 6 "C:\0\Projects\HomeAssignment\HA\_Imports.razor"
 using Microsoft.AspNetCore.Components.Web;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 7 "D:\0_Projects\HA\HA\_Imports.razor"
+#line 7 "C:\0\Projects\HomeAssignment\HA\_Imports.razor"
 using Microsoft.JSInterop;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 8 "D:\0_Projects\HA\HA\_Imports.razor"
+#line 8 "C:\0\Projects\HomeAssignment\HA\_Imports.razor"
 using HA;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 9 "D:\0_Projects\HA\HA\_Imports.razor"
+#line 9 "C:\0\Projects\HomeAssignment\HA\_Imports.razor"
 using HA.Shared;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 5 "D:\0_Projects\HA\HA\Pages\RebateManager.razor"
+#line 5 "C:\0\Projects\HomeAssignment\HA\Pages\RebateManager.razor"
 using HA.Models;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 6 "D:\0_Projects\HA\HA\Pages\RebateManager.razor"
+#line 6 "C:\0\Projects\HomeAssignment\HA\Pages\RebateManager.razor"
 using HA.Services;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 8 "D:\0_Projects\HA\HA\Pages\RebateManager.razor"
+#line 8 "C:\0\Projects\HomeAssignment\HA\Pages\RebateManager.razor"
 using System.Security.Claims;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 9 "D:\0_Projects\HA\HA\Pages\RebateManager.razor"
+#line 9 "C:\0\Projects\HomeAssignment\HA\Pages\RebateManager.razor"
 using Microsoft.AspNetCore.Components.Authorization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 11 "D:\0_Projects\HA\HA\Pages\RebateManager.razor"
+#line 11 "C:\0\Projects\HomeAssignment\HA\Pages\RebateManager.razor"
 using Microsoft.AspNetCore.Identity;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "D:\0_Projects\HA\HA\Pages\RebateManager.razor"
+#line 3 "C:\0\Projects\HomeAssignment\HA\Pages\RebateManager.razor"
            [Authorize(Roles = "admin, retailer")]
 
 #line default
@@ -119,7 +119,7 @@ using Microsoft.AspNetCore.Identity;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 65 "D:\0_Projects\HA\HA\Pages\RebateManager.razor"
+#line 65 "C:\0\Projects\HomeAssignment\HA\Pages\RebateManager.razor"
        
     private List<Rebate> rebates;
     private Rebate newRebate = new Rebate { Customer = new ApplicationUser() };

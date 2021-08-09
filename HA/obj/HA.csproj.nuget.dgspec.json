@@ -1,25 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\0_Projects\\HA\\HA\\HA.csproj": {}
+    "C:\\0\\Projects\\HomeAssignment\\HA\\HA.csproj": {}
   },
   "projects": {
-    "D:\\0_Projects\\HA\\HA\\HA.csproj": {
+    "C:\\0\\Projects\\HomeAssignment\\HA\\HA.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\0_Projects\\HA\\HA\\HA.csproj",
+        "projectUniqueName": "C:\\0\\Projects\\HomeAssignment\\HA\\HA.csproj",
         "projectName": "HA",
-        "projectPath": "D:\\0_Projects\\HA\\HA\\HA.csproj",
-        "packagesPath": "C:\\Users\\johns\\.nuget\\packages\\",
-        "outputPath": "D:\\0_Projects\\HA\\HA\\obj\\",
+        "projectPath": "C:\\0\\Projects\\HomeAssignment\\HA\\HA.csproj",
+        "packagesPath": "C:\\Users\\ioan.stoita\\.nuget\\packages\\",
+        "outputPath": "C:\\0\\Projects\\HomeAssignment\\HA\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\johns\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\ioan.stoita\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -90,7 +88,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
