@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace HA.Data.Migrations
+namespace HA.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210808135107_clean3")]
-    partial class clean3
+    [Migration("20210809063529_0")]
+    partial class _0
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -163,6 +163,11 @@ namespace HA.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsStandardPrice")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.Property<string>("Name")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
@@ -174,11 +179,6 @@ namespace HA.Data.Migrations
 
                     b.Property<string>("RetailerId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("StandardPrice")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
 
                     b.HasKey("Id");
 
@@ -328,7 +328,7 @@ namespace HA.Data.Migrations
                         .HasForeignKey("CustomerId");
 
                     b.HasOne("HA.Models.ApplicationUser", "Retailer")
-                        .WithMany("RetailerRebates")
+                        .WithMany("Rebates")
                         .HasForeignKey("RetailerId");
 
                     b.Navigation("Customer");
@@ -374,7 +374,7 @@ namespace HA.Data.Migrations
 
                     b.Navigation("Products");
 
-                    b.Navigation("RetailerRebates");
+                    b.Navigation("Rebates");
 
                     b.Navigation("UserRoles");
                 });

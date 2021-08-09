@@ -19,7 +19,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <ProjectCapability Include="ClassDesigner"/>
+    <ProjectCapability Include="ClassDesigner" />
   </ItemGroup>
 
 </Project>
